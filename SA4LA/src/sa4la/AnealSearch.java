@@ -216,9 +216,13 @@ public class AnealSearch {
 		t2.start();
 
 		// t1, t2が終了するまで、待機
-		while (t1.isAlive() || t2.isAlive())
-			;
-
+		// while (t1.isAlive() || t2.isAlive())
+		//	;
+		try {
+		 	t1.join(); t2.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		assert state.missinteraction == state.nocoveredmap.size();
 
 		// 以下、変異の影響を受けたinteractionsetを取り出す
