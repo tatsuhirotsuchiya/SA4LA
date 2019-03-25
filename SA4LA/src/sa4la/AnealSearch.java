@@ -47,10 +47,11 @@ public class AnealSearch {
 		State neighborhood;
 		double p;
 
-		// 繰り返し数を満たす、温度が下がりきる、またはfitnessが0になるまでループ
+		// 繰り返し数を満たす、温度が下がりきる、またはfitnessが0になるまでループ -> 温度は無視
 		int i = 1;// 初期化を1回と考える
 		int iterations = option.getiterations();// 繰り返しの最大数
-		while (i < iterations && temperature > 0.0001 && state.fitness() > 0) {
+		while (i < iterations && state.fitness() > 0) {
+//			while (i < iterations && temperature > 0.0001 && state.fitness() > 0) {
 			neighborhood = mutatestate(state);
 			neighborhood = calculatefitness(neighborhood);
 
@@ -95,8 +96,16 @@ public class AnealSearch {
 		State mstate = state.clone();
 
 		// 変異
-		// カバーできていないinteactionがある場合
-		if (mstate.missinteraction > 0) {
+		if (option.getBaselineAlgorithm() == true) {
+			mstate.mrow = rnd.nextInt(row);
+			// 変異前のテストケースを保存
+			mstate.pretestcase = mstate.array[mstate.mrow].clone();
+			// テストケースを変異
+			int col = rnd.nextInt(column);
+			mstate.array[mstate.mrow][col] = rnd.nextInt(values[col]);
+		}
+		// カバーできていないinteractionがある場合
+		else if (mstate.missinteraction > 0) {
 			// 変異に使用するinteractionをランダムに決定
 			IntBuffer[] keys = mstate.nocoveredmap.keySet().toArray(new IntBuffer[mstate.nocoveredmap.size()]);
 			Interaction i = mstate.nocoveredmap.get(keys[rnd.nextInt(keys.length)]);
@@ -210,19 +219,25 @@ public class AnealSearch {
 		state.mikeys.clear();// mikeysをリセット
 		// 変異の結果、新しく現れたinteractionを管理するスレッド
 		Thread t1 = new Thread(new checkNewInteractions(state));
-		t1.start();
 		// 変異の結果、失われたinteractionを管理するスレッド
 		Thread t2 = new Thread(new checkLostInteractions(state));
+
+		/*
+		 * 
+		t1.start();
 		t2.start();
 
 		// t1, t2が終了するまで、待機
-		// while (t1.isAlive() || t2.isAlive())
-		//	;
 		try {
 		 	t1.join(); t2.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		*/
+		// multithreading disabled
+		t1.run(); 
+		t2.run();
+		
 		assert state.missinteraction == state.nocoveredmap.size();
 
 		// 以下、変異の影響を受けたinteractionsetを取り出す

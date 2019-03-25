@@ -9,7 +9,8 @@ public class BinarySearch {
 	// 探索するメソッド
 	// offset = low, offset + size -1 = high
 	public int search(int offset, int size) {
-		double partition = 0.7;// サイズの減少率
+//		double partition = 0.7;// サイズの減少率
+		double partition = 0.5;// サイズの減少率
 		int result = offset + size;
 
 		System.out.println("Start Binary Search");

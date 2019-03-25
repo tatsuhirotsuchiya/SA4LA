@@ -39,7 +39,7 @@ public class Main {
 					option.setiterations(iterations);
 				}
 
-				// オプション-rが入っていた場合は, iterations指定
+				// オプション-rが入っていた場合は, retries 指定
 				else if (args[i].equals("-r") || args[i].equals("--retries")) {
 					i++;
 					int retries = Integer.parseInt(args[i]);
@@ -53,6 +53,18 @@ public class Main {
 					option.settemperature(temperature);
 				}
 
+				// オプション--coolが入っていた場合は, cooling 係数を指定
+				else if (args[i].equals("--cool")) {
+					i++;
+					double coolingCoefficient = Double.parseDouble(args[i]);
+					option.setdecrement(coolingCoefficient);
+				}
+				
+				// オプション--baselineが入っていた場合は, baselineアルゴリズムを選択
+				else if (args[i].equals("--baseline")) {
+					option.setBaselineAlgorithm(true);
+				}
+				
 				// オプション-uが入っていた場合は, 初期upper bound指定
 				else if (args[i].equals("-u") || args[i].equals("--upper-bound")) {
 					i++;

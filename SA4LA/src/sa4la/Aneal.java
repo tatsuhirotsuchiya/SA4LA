@@ -15,6 +15,9 @@ public class Aneal {
 		final int[] values = option.getvalues();// 値数
 		final int column = option.getcolumn();// パラメータ数
 
+		if (option.getBaselineAlgorithm() == true) {
+			System.out.println("baseline algorithm");
+		}
 		System.out.println("Start to set up for searching (" + dnum + "," + strength + ")-Locating Array (column: "
 				+ column + ")");
 
@@ -53,21 +56,46 @@ public class Aneal {
 
 		int result = search.search(lower, upper - lower + 1);
 
-		// 結果がUpper boundより大きかった場合、Upper boundを更新する
+		// 結果がUpper boundより大きかった場合(失敗した場合)、Upper boundを更新して，できるまでトライする
+//		while (result > upper) {
+//			upper += 1;
+//			System.out.println("Trying more conservative upper bound " + upper);
+//			result = search.search(lower, upper + 1 - lower);
+//		}
+		// 単にできるまでやる方向に変更
 		while (result > upper) {
-			upper += 1;
-			System.out.println("Trying more conservative upper bound " + upper);
+			System.out.println("Trying with upper bound " + upper);
 			result = search.search(lower, upper + 1 - lower);
 		}
-
+		
 		// リトライ開始
-		do {// resultがlower boundに達した場合、lower boundを下げる
-			if (lower == result) {
-				lower--;
-				if (lower < 4)// lower boundが4未満になることはない
-					break;
-				System.out.println("Trying less conservative lower bound " + lower);
-			}
+		int lastResult = result;
+		int upped = 0;
+
+		if (option.getretries() > 0) {
+			do {
+				if (lastResult == result) {
+					option.setiterations(option.getiterations() * 1);// SAの繰り返し数を1倍に
+					System.out.println("Upping iterations to " + option.getiterations());
+					upped++;
+				} else {
+					upped = 0;
+				}
+
+				lastResult = result;
+				System.out.println("Restarting binary search with best result at " + lastResult + " rows");
+				result = search.search(lower, lastResult - lower);
+			} while ((result < lastResult || upped < option.getretries()) && result > lower);
+		}
+		
+/*		do {
+			// resultがlower boundに達した場合、lower boundを下げる
+//			if (lower == result) {
+//				lower--;
+//				if (lower < 4)// lower boundが4未満になることはない
+//					break;
+//				System.out.println("Trying less conservative lower bound " + lower);
+//			}
 
 			int lastResult = result;
 			int upped = 0;
@@ -85,7 +113,7 @@ public class Aneal {
 				System.out.println("Restarting binary search with best result at " + lastResult + " rows");
 				result = search.search(lower, lastResult - lower);
 			} while ((result < lastResult || upped < option.getretries()) && result > lower);
-		} while (lower == result);
+		} while (lower == result);*/
 
 		// 結果表示
 		long end = System.currentTimeMillis();// 時間計測終了

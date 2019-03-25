@@ -9,7 +9,7 @@ public class BinarySearch4Test {
 		System.out.println("final result: " + result);
 		
 		System.out.println("------------------");
-		result = t.tmpsearch(100, 150);
+		result = t.tmpsearch(100, 51);
 		System.out.println("final result: " + result);
 		
 	}
@@ -45,10 +45,10 @@ public class BinarySearch4Test {
 	}
 
 	// 探索するメソッド
-	public int tmpsearch(int low, int high) {
+	public int tmpsearch(int low, int range) {
+		int high = low + range - 1;
 		double partition = 0.7;// サイズの減少率
 		int result = high + 1;
-		boolean isFound = false;
 		
 		System.out.println("Start Binary Search");
 
@@ -63,8 +63,10 @@ public class BinarySearch4Test {
 //			if (aneal.search(division)) {
 			if (true) {
 	//			System.out.println("Get Locating Array with " + size + " rows.");
-				high = size - 1;
+				high = size;
 				result = size;
+				if (low == high)
+					break;
 			} else {
 	//			System.out.println("Failed to get Locating Array with " + size + " rows.");
 				low = size + 1;

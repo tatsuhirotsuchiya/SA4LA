@@ -10,6 +10,7 @@ public class Option {
 	private static int column;// パラメータ数
 	private static long seed;// 乱数用のシード値
 	private static double temperature = 0.5;// 温度
+	
 	private static double decrement = 0.99999;// 減衰率
 	private static int iterations = 1024;// 繰り返し数
 	private static int retries = 2;// リトライ数
@@ -17,6 +18,7 @@ public class Option {
 	private static int lower = 0;// 初期lower bound
 	private static List<Interaction> interactions;// interactionのセット
 	private static State state;// 最適な結果の状態を保存
+	private static boolean isBaselineAlgorithm = false; // baseline algorithmをつかう
 
 	// ゲッターとセッター
 	public int getstrength() {
@@ -66,7 +68,7 @@ public class Option {
 	public void settemperature(double temperature) {
 		Option.temperature = temperature;
 	}
-
+	
 	public double getdecrement() {
 		return decrement;
 	}
@@ -121,5 +123,12 @@ public class Option {
 
 	public void setstate(State state) {
 		Option.state = state;
+	}
+
+	public void setBaselineAlgorithm(boolean b) {
+		Option.isBaselineAlgorithm  = b;
+	}
+	public boolean getBaselineAlgorithm() {
+		return isBaselineAlgorithm;
 	}
 }
