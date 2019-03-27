@@ -11,8 +11,10 @@ public class Option {
 	private static long seed;// 乱数用のシード値
 	private static double temperature = 0.5;// 温度
 	
-	private static double decrement = 0.99999;// 減衰率
-	private static int iterations = 1024;// 繰り返し数
+//	private static double decrement = 0.99999;// 減衰率
+	private static double decrement = 0.999;// 減衰率
+//	private static int iterations = 1024;// 繰り返し数
+	private static int iterations = 4096;// 繰り返し数
 	private static int retries = 2;// リトライ数
 	private static int upper = 0;// 初期upper bound
 	private static int lower = 0;// 初期lower bound

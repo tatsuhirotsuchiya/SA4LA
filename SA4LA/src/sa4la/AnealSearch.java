@@ -78,7 +78,8 @@ public class AnealSearch {
 			// missinteraction: " + state.missinteraction);
 			// System.out.println();
 		}
-
+		System.out.println("temparature: " + temperature);
+		
 		// 結果を返す
 		System.out.println("Stopped search after " + i + "/" + option.getiterations() + " iteration(s)");
 		System.out.println("Uncovered Interaction: " + state.missinteraction);
@@ -96,6 +97,7 @@ public class AnealSearch {
 		State mstate = state.clone();
 
 		// 変異
+		// 単純な変異方法を追加
 		if (option.getBaselineAlgorithm() == true) {
 			mstate.mrow = rnd.nextInt(row);
 			// 変異前のテストケースを保存

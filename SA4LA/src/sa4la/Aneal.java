@@ -16,7 +16,10 @@ public class Aneal {
 		final int column = option.getcolumn();// パラメータ数
 
 		if (option.getBaselineAlgorithm() == true) {
-			System.out.println("baseline algorithm");
+			System.out.println("*** baseline algorithm");
+		}
+		else {
+			System.out.println("proposed algorithm");
 		}
 		System.out.println("Start to set up for searching (" + dnum + "," + strength + ")-Locating Array (column: "
 				+ column + ")");
