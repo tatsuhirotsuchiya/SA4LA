@@ -33,6 +33,6 @@ public class BinarySearch {
 				offset = division;
 			}
 		}
-		return result;
+		return result; // みつからなかったら offset + sizeがかえる
 	}
 }

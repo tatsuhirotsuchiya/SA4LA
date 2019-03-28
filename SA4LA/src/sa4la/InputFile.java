@@ -22,7 +22,8 @@ public class InputFile {
 			option.setcolumn(Integer.parseInt(br.readLine()));// パラメータ数と取り出す
 
 			// 値数と取り出す
-			String[] str = br.readLine().split(" ", 0);
+//			String[] str = br.readLine().split(" ", 0);
+			String[] str = br.readLine().split("\\s+");
 			int[] values = Stream.of(str).mapToInt(Integer::parseInt).toArray();// 型変換
 			option.setvalues(values);
 

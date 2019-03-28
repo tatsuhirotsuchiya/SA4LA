@@ -32,7 +32,9 @@ public class State implements Cloneable {
 	public Map<List<IntBuffer>, InteractionSet> nolocatedmap = new HashMap<>();
 	// 変異の影響を受けたinteractionのキーを保存するリスト
 	public List<IntBuffer> mikeys = new ArrayList<>();
-
+	
+	private final Option option = new Option();
+	
 	State(int[][] array, List<Interaction> interactions, int detectednum, int strength) {
 		this.array = array;
 		row = array.length;
@@ -121,8 +123,8 @@ public class State implements Cloneable {
 	}
 
 	// fitnessの取得
-	public int fitness() {
-		return missinteraction + misslocation;
+	public double fitness() {
+		return option.getweight() * missinteraction + misslocation;
 	}
 
 	// missinteractionの更新(複数スレッドでmissinteractionの更新があるため使用)

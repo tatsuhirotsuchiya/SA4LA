@@ -50,6 +50,7 @@ public class AnealSearch {
 		// 繰り返し数を満たす、温度が下がりきる、またはfitnessが0になるまでループ -> 温度は無視
 		int i = 1;// 初期化を1回と考える
 		int iterations = option.getiterations();// 繰り返しの最大数
+		
 		while (i < iterations && state.fitness() > 0) {
 //			while (i < iterations && temperature > 0.0001 && state.fitness() > 0) {
 			neighborhood = mutatestate(state);
@@ -63,10 +64,13 @@ public class AnealSearch {
 			else {
 				double b = (double) (state.fitness() - neighborhood.fitness()) / temperature;
 				p = Math.pow(Math.E, b);
-				// System.out.println(p);// 確率表示
-
-				if (rnd.nextDouble() <= p)
+/*				if (p >= 0.1) {
+					System.out.println(p + "@" + temperature);// 確率表示
+				}*/
+				if (rnd.nextDouble() <= p) {
 					state = neighborhood;
+					// System.out.println("back move@" + temperature);
+				}
 			}
 
 			// 温度を下げる
@@ -78,7 +82,6 @@ public class AnealSearch {
 			// missinteraction: " + state.missinteraction);
 			// System.out.println();
 		}
-		System.out.println("temparature: " + temperature);
 		
 		// 結果を返す
 		System.out.println("Stopped search after " + i + "/" + option.getiterations() + " iteration(s)");
@@ -103,8 +106,14 @@ public class AnealSearch {
 			// 変異前のテストケースを保存
 			mstate.pretestcase = mstate.array[mstate.mrow].clone();
 			// テストケースを変異
+			// column を選択
 			int col = rnd.nextInt(column);
-			mstate.array[mstate.mrow][col] = rnd.nextInt(values[col]);
+			// value を選択
+			int val = rnd.nextInt(values[col]-1);
+			// 現在と同じ値なら，最大値に
+			if (mstate.array[mstate.mrow][col] == val)
+				val = values[col]-1;
+			mstate.array[mstate.mrow][col] = val;
 		}
 		// カバーできていないinteractionがある場合
 		else if (mstate.missinteraction > 0) {

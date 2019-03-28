@@ -9,19 +9,22 @@ public class Option {
 	private static int[] values;// 値数
 	private static int column;// パラメータ数
 	private static long seed;// 乱数用のシード値
-	private static double temperature = 0.5;// 温度
+	private static double temperature = 4.0;// 温度
+//	private static double temperature = 0.5;// 温度
 	
 //	private static double decrement = 0.99999;// 減衰率
 	private static double decrement = 0.999;// 減衰率
-//	private static int iterations = 1024;// 繰り返し数
 	private static int iterations = 4096;// 繰り返し数
-	private static int retries = 2;// リトライ数
+//	private static int iterations = 8192;// 繰り返し数
+	private static int retries = 3;// リトライ数
 	private static int upper = 0;// 初期upper bound
 	private static int lower = 0;// 初期lower bound
 	private static List<Interaction> interactions;// interactionのセット
 	private static State state;// 最適な結果の状態を保存
 	private static boolean isBaselineAlgorithm = false; // baseline algorithmをつかう
 
+	private static double weight = 1.0; // 目的関数の第1項の重み
+	
 	// ゲッターとセッター
 	public int getstrength() {
 		return strength;
@@ -132,5 +135,12 @@ public class Option {
 	}
 	public boolean getBaselineAlgorithm() {
 		return isBaselineAlgorithm;
+	}
+
+	public void setweight(double weight) {
+		Option.weight = weight;
+	}
+	public double getweight() {
+		return weight;
 	}
 }

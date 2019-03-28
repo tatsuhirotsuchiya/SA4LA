@@ -12,6 +12,7 @@ public class Usage {
 				+ "-t,--temperature      [TEMP]     set the initial temperature\n"
 				+ "-l,--lower-bound      [SIZE]     let the locating array be no smaller than the given size\n"
 				+ "-u,--upper-bound      [SIZE]     let the locating array be no larger than the given size\n"
+				+ "-w,--weight           [VALUE]    weight for 1st term of objective function\n"
 				+ "--cool                [0< <1]    cooling coefficient \n"
 				+ "--baseline                       use baseline algoirthm \n"
 				+ "-h,--help                        show this help and exit\n\n\n";

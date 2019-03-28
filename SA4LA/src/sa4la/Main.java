@@ -65,6 +65,13 @@ public class Main {
 					option.setBaselineAlgorithm(true);
 				}
 				
+				// オプション-wが入っていた場合は, temperature指定
+				else if (args[i].equals("-w") || args[i].equals("--weight")) {
+					i++;
+					double weight = Double.parseDouble(args[i]);
+					option.setweight(weight);
+				}
+				
 				// オプション-uが入っていた場合は, 初期upper bound指定
 				else if (args[i].equals("-u") || args[i].equals("--upper-bound")) {
 					i++;

@@ -1,5 +1,6 @@
 ﻿package sa4la;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //CASA Anneal.C内のアルゴリズムを使用
@@ -16,11 +17,15 @@ public class Aneal {
 		final int column = option.getcolumn();// パラメータ数
 
 		if (option.getBaselineAlgorithm() == true) {
-			System.out.println("*** baseline algorithm");
+			System.out.println("Algorihtm: baseline");
 		}
 		else {
-			System.out.println("proposed algorithm");
+			System.out.println("Algorithm: proposed");
 		}
+		System.out.println("initial temparature: " + option.gettemperature());
+		System.out.println("iterations: " + option.getiterations());
+		System.out.println("weight: " + option.getweight());
+
 		System.out.println("Start to set up for searching (" + dnum + "," + strength + ")-Locating Array (column: "
 				+ column + ")");
 
@@ -39,7 +44,9 @@ public class Aneal {
 		if (upper <= 0) {
 			int max = getmaxvalue(values);// 最大の値数を取り出す
 			// Upper boundの計算(１つ値の大きなLAのlowerbound)
-			upper = getlowerbound(strength, max + 1, column) * dnum;
+			upper = getlowerbound(strength, max + 1, column);
+			// d >= 2の場合は，ひとまずなし
+			// upper = getlowerbound(strength, max + 1, column) * dnum;
 		}
 
 		// lowerがupperより大きい場合、逆にする
@@ -65,7 +72,7 @@ public class Aneal {
 //			System.out.println("Trying more conservative upper bound " + upper);
 //			result = search.search(lower, upper + 1 - lower);
 //		}
-		// 単にできるまでやる方向に変更
+		// 単にできるまでやるように変更
 		while (result > upper) {
 			System.out.println("Trying with upper bound " + upper);
 			result = search.search(lower, upper + 1 - lower);
@@ -75,6 +82,24 @@ public class Aneal {
 		int lastResult = result;
 		int upped = 0;
 
+		// 1行ずつ減らしていく
+		for (int size = lastResult-1; size >= lower; size--) {
+			System.out.println("Try of size " + size);
+			boolean isFound = false;
+			for (int times = 0; times < option.getretries() + 1; times++) {
+				result = search.search(size, 1);
+				if (result == size) {
+					isFound = true;
+					lastResult = size;
+					break;
+				}
+			}
+			if (isFound == false) 
+				break;
+		}
+		result = lastResult;
+		
+		/* 土屋による1st version 
 		if (option.getretries() > 0) {
 			do {
 				if (lastResult == result) {
@@ -90,7 +115,9 @@ public class Aneal {
 				result = search.search(lower, lastResult - lower);
 			} while ((result < lastResult || upped < option.getretries()) && result > lower);
 		}
+		*/
 		
+		// 小西さんのバージョン
 /*		do {
 			// resultがlower boundに達した場合、lower boundを下げる
 //			if (lower == result) {
