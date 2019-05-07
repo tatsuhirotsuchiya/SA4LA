@@ -1,5 +1,5 @@
 # SA4LA
-Simulated annealing for obtaining (d,t)-locating arrays
+Simulated annealing for obtaining (\overline{1},t)-locating arrays
 
 # Usage 
 `java -jar program.jar inputfile`
