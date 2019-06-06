@@ -7,7 +7,8 @@ import java.util.List;
 
 //SAの全体の動きを管理するクラス
 public class Aneal {
-	private final Option option = new Option();// グローバル変数用クラス
+
+    private final Option option = new Option();// グローバル変数用クラス
 
 	public void start() {
 		// グローバル変数から取り出し
@@ -68,14 +69,26 @@ public class Aneal {
 
 		// 結果がUpper boundより大きかった場合(失敗した場合)、Upper boundを更新して，できるまでトライする
 //		while (result > upper) {
-//			upper += 1;
-//			System.out.println("Trying more conservative upper bound " + upper);
-//			result = search.search(lower, upper + 1 - lower);
+//		    int delta = (int)((double) upper * Option.BoundIncreaseRate);
+//		    if (delta <= 0)
+//		        delta = 1;
+//		    upper += delta;
+//		    System.out.println("Trying more conservative upper bound " + upper);
+//		    result = search.search(lower, upper + 1 - lower);
 //		}
+
+		// 小西君のコード +1ずつあげる
+		//		while (result > upper) {
+		//			upper += 1;
+		//			System.out.println("Trying more conservative upper bound " + upper);
+		//			result = search.search(lower, upper + 1 - lower);
+		//		}
+		
+		
 		// 単にできるまでやるように変更
 		while (result > upper) {
-			System.out.println("Trying with upper bound " + upper);
-			result = search.search(lower, upper + 1 - lower);
+		    System.out.println("Trying with upper bound " + upper);
+		    result = search.search(lower, upper + 1 - lower);
 		}
 		
 		// リトライ開始

@@ -25,6 +25,8 @@ public class Option {
 
 	private static double weight = 1.0; // 目的関数の第1項の重み
 	
+	static final double BoundIncreaseRate = 0.05;
+	   
 	// ゲッターとセッター
 	public int getstrength() {
 		return strength;
@@ -143,4 +145,6 @@ public class Option {
 	public double getweight() {
 		return weight;
 	}
+	
 }
+
