@@ -22,7 +22,7 @@ public class AnealSearch {
 	private final Random rnd = new Random(option.getseed());// 乱数生成用インスタンス
 	private final IntBuffer zerokey = IntBuffer.wrap(new int[0]);// 空のIntBuffer
 
-	// Simulated Annealing実行
+	// Simulated Annealing 実行
 	public boolean search(int row) {
 		double temperature = option.gettemperature();// 温度
 		double decrement = option.getdecrement();// 減衰率
@@ -89,6 +89,10 @@ public class AnealSearch {
 		System.out.println("Covered but not located interaction: " + state.misslocation);
 		if (state.fitness() == 0) {
 			option.setstate(state);
+			long current_time = System.currentTimeMillis();
+            System.out.println("number of rows + time [ms]");
+	        System.out.println("__MID " + row + " " + (current_time - Main.start));
+			state.printarray();
 			return true;
 		} else
 			return false;

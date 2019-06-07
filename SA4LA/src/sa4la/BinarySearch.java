@@ -24,6 +24,8 @@ public class BinarySearch {
 			// LAが見つかったのかで場合分け
 			if (aneal.search(division)) {
 				System.out.println("Get Locating Array with " + division + " rows.");
+				// new Option().getstate().printarray();
+				
 				size = division - offset;
 				result = division;
 			} else {

@@ -1,6 +1,6 @@
 ﻿package sa4la;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 //CASA Anneal.C内のアルゴリズムを使用
@@ -63,10 +63,10 @@ public class Aneal {
 
 		System.out.println("Suspect that the optimum number of rows is in [" + lower + ".." + upper + "]");
 		System.out.println("Start annealing");
-		long start = System.currentTimeMillis();// 時間計測開始
+//		long start = System.currentTimeMillis();// 時間計測開始
 
 		int result = search.search(lower, upper - lower + 1);
-
+        
 		// 結果がUpper boundより大きかった場合(失敗した場合)、Upper boundを更新して，できるまでトライする
 //		while (result > upper) {
 //		    int delta = (int)((double) upper * Option.BoundIncreaseRate);
@@ -93,7 +93,7 @@ public class Aneal {
 		
 		// リトライ開始
 		int lastResult = result;
-		int upped = 0;
+	//	int upped = 0;
 
 		// 1行ずつ減らしていく
 		for (int size = lastResult-1; size >= lower; size--) {
@@ -161,8 +161,10 @@ public class Aneal {
 		// 結果表示
 		long end = System.currentTimeMillis();// 時間計測終了
 		System.out.println("Giving up with best result at " + result + " rows");
-		System.out.println("Time: " + (end - start) + "ms");
+		System.out.println("Time: " + (end - Main.start) + "ms");
 		System.out.println();
+        System.out.println("number of rows + time [ms]");
+		System.out.println("__END " + result + " " + (end - Main.start));
 		option.getstate().printarray();
 	}
 

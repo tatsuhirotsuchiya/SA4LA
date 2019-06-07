@@ -4,6 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 public class Main {
+    
+    static final long start = System.currentTimeMillis();
+    
 	public static void main(String[] args) {
 		Option option = new Option();// グローバル変数用
 		long seed = 0;
