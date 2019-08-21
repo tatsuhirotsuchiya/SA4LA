@@ -13,9 +13,16 @@ public class BinarySearch {
 		double partition = 0.5;// サイズの減少率
 		int result = offset + size;
 
+		int lower = offset;
+		int upper = offset + size - 1;
+		
 		System.out.println("Start Binary Search");
 
+        assert (size == upper - lower + 1);
+        
 		while (size > 0) {
+		    assert (size == upper - lower + 1);
+		    
 			int division = offset + (int) ((double) size * partition);
 
 			System.out.println("trying " + division + " rows");
@@ -28,11 +35,19 @@ public class BinarySearch {
 				
 				size = division - offset;
 				result = division;
+				
+				upper = division - 1;
+	            assert (size == upper - lower + 1);
+				
 			} else {
 				System.out.println("Failed to get Locating Array with " + division + " rows.");
+                lower = division + 1;
+                
 				division++;
 				size += offset - division;
 				offset = division;
+				
+                assert (size == upper - lower + 1);				
 			}
 		}
 		return result; // みつからなかったら offset + sizeがかえる

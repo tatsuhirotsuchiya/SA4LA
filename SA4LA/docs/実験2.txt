@@ -9,6 +9,7 @@
 java -jar file.jar -w [重み] -t [温度] -i　[イタレーション] -s [乱数の種] inputfile
 
 2019.06.07 にプログラム変更
+https://github.com/tatsuhirotsuchiya/SA4LA/tree/master/SA4LA/download
 
 重み (カバーされていないインタラクションを，目的関数でどの程度評価するか)
 4.0
